@@ -15,6 +15,7 @@ import (
 
 var apiToken = os.Getenv("API_TOKEN")
 
+// MyContext will keep track of the context for each request
 type MyContext struct{}
 
 func (c *MyContext) render(status int, value interface{}, rw web.ResponseWriter) {

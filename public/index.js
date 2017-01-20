@@ -528,6 +528,10 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _Form = __webpack_require__(180);
+
+	var _Form2 = _interopRequireDefault(_Form);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -535,6 +539,10 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function postQuestion(data) {
+	  alert('question posted');
+	}
 
 	var Index = function (_React$Component) {
 	  _inherits(Index, _React$Component);
@@ -551,7 +559,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'hi'
+	        _react2.default.createElement(_Form2.default, { onSubmit: postQuestion })
 	      );
 	    }
 	  }]);
@@ -21994,6 +22002,97 @@
 
 	module.exports = ReactDOMInvalidARIAHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Form = function (_React$Component) {
+	  _inherits(Form, _React$Component);
+
+	  function Form(props) {
+	    _classCallCheck(this, Form);
+
+	    var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
+
+	    _this.state = {
+	      author: '',
+	      body: ''
+	    };
+
+	    _this.onChangeBody = _this.onChangeBody.bind(_this);
+	    _this.onChangeAuthor = _this.onChangeAuthor.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(Form, [{
+	    key: 'onChangeAuthor',
+	    value: function onChangeAuthor(ev) {
+	      this.setState({
+	        author: ev.target.value
+	      });
+	    }
+	  }, {
+	    key: 'onChangeBody',
+	    value: function onChangeBody(ev) {
+	      this.setState({
+	        body: ev.target.value
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      var _onSubmit = this.props.onSubmit;
+
+
+	      return _react2.default.createElement(
+	        'form',
+	        { onSubmit: function onSubmit() {
+	            _onSubmit(_this2.state);
+	          } },
+	        _react2.default.createElement('textarea', {
+	          rows: '1',
+	          onChange: this.onChangeBody,
+	          value: this.state.body,
+	          placeholder: 'Ask anything'
+	        }),
+	        _react2.default.createElement('textarea', {
+	          rows: '1',
+	          onChange: this.onChangeAuthor,
+	          value: this.state.author,
+	          placeholder: 'Your name'
+	        }),
+	        _react2.default.createElement('input', { type: 'submit', disabled: !this.state.body })
+	      );
+	    }
+	  }]);
+
+	  return Form;
+	}(_react2.default.Component);
+
+	exports.default = Form;
 
 /***/ }
 /******/ ]);

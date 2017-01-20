@@ -34,6 +34,11 @@ func (c *MyContext) AskQuestions(rw web.ResponseWriter, req *web.Request) {
 		c.render(http.StatusBadRequest, nil, rw)
 		return
 	}
+	if len(question.Body) == 0 {
+		c.render(http.StatusBadRequest, Message{Message: "Empty body"}, rw)
+		return
+	}
+
 	if err := db.Insert(&question); err != nil {
 		c.render(http.StatusBadRequest, nil, rw)
 		return

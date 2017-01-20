@@ -1,0 +1,35 @@
+{
+  "name": "ubc-tech-talk",
+  "version": "1.0.0",
+  "description": "This repo is for the live coding portion of the talk. We will commit regularly to the `master` branch so you can follow along as we go.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axiomzen/ubc-tech-talk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/axiomzen/ubc-tech-talk/issues"
+  },
+  "homepage": "https://github.com/axiomzen/ubc-tech-talk#readme",
+  "dependencies": {
+    "babel-core": "^6.22.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "webpack": "^1.14.0",
+    "whatwg-fetch": "^2.0.2"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  }
+}

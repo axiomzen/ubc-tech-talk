@@ -7,6 +7,9 @@ import (
 
 	"net/url"
 
+	"path"
+
+	"github.com/gocraft/web"
 	pg "gopkg.in/pg.v5"
 )
 
@@ -27,6 +30,19 @@ func main() {
 	}
 
 	db = pg.Connect(dbOpts)
+
+	router := web.New(MyContext{})
+	router.Middleware(web.LoggerMiddleware)
+	router.Middleware(web.ShowErrorsMiddleware)
+	staticPath, _ := os.Getwd()
+	if os.Getenv("ENVIRONMENT") == "production" {
+		staticPath = "/app"
+	}
+	router.Middleware(web.StaticMiddleware(path.Join(staticPath, "public"), web.StaticOption{IndexFile: "index.html"}))
+	router.Get("/ping", (*MyContext).Ping)
+
+	subRouter := router.Subrouter(MyContext{}, "")
+	subRouter.Middleware((*MyContext).APIAuthRequired)
 
 	port := os.Getenv("PORT")
 

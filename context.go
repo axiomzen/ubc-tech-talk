@@ -6,8 +6,14 @@ import (
 	"encoding/json"
 	"io"
 
+	"net/http"
+
+	"os"
+
 	"github.com/gocraft/web"
 )
+
+var apiToken = os.Getenv("API_TOKEN")
 
 type MyContext struct{}
 
@@ -31,4 +37,19 @@ func (c *MyContext) encode(value interface{}, w io.Writer) error {
 func (c *MyContext) decode(value interface{}, r io.Reader) error {
 	decoder := json.NewDecoder(r)
 	return decoder.Decode(value)
+}
+
+// NotFound returns status 404 if the route is not available
+func (c *MyContext) NotFound(rw web.ResponseWriter, req *web.Request) {
+	c.render(http.StatusNotFound, Message{Message: "Not Found"}, rw)
+}
+
+// APIAuthRequired simple api gating
+func (c *MyContext) APIAuthRequired(rw web.ResponseWriter, req *web.Request, next web.NextMiddlewareFunc) {
+	token := req.Header.Get("x-api-token")
+	if token == apiToken {
+		next(rw, req)
+	} else {
+		c.render(http.StatusUnauthorized, Message{Message: "Unauthorized"}, rw)
+	}
 }

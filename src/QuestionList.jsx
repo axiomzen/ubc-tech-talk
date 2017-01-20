@@ -1,14 +1,22 @@
 import React from 'react';
 
+function sortByVote(questionA, questionB) {
+  return questionB.votes - questionA.votes;
+}
+
 class QuestionList extends React.Component {
 
   render() {
+    const { questions, onUpvote } = this.props;
+
+    const sortedQuestions = questions.sort(sortByVote);
+
     return (
       <div className='question-list'>
       {sortedQuestions.map(function(question) {
         return (
           <div className='question-item' key={question.id}>
-          <div className='question-voted'>{question.votes}</div>
+          <div className='question-votes'>{question.votes}</div>
           <button className='question-vote'
             onClick={() => {onUpvote(question.id); }}
             disabled={question.voted} >

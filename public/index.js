@@ -520,6 +520,8 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	__webpack_require__(1);
+
 	var _react = __webpack_require__(3);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -532,6 +534,10 @@
 
 	var _Form2 = _interopRequireDefault(_Form);
 
+	var _QuestionList = __webpack_require__(181);
+
+	var _QuestionList2 = _interopRequireDefault(_QuestionList);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -540,26 +546,111 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var postUrl = '/questions';
+
+	function readLocalStorage() {
+	  var currentVotedQuestions = localStorage.votedQuestions || '[]';
+	  return JSON.parse(currentVotedQuestions);
+	}
+
+	function updateLocalStorage(questionId) {
+	  var votedQuestions = readLocalStorage();
+	  votedQuestions.push(questionId);
+	  localStorage.votedQuestions = JSON.stringify(votedQuestions);
+	}
+
 	function postQuestion(data) {
-	  alert('question posted');
+	  return fetch(postUrl, {
+	    method: 'post',
+	    headers: {
+	      "Content-type": "application/json; charset=UTF-8",
+	      'x-api-token': 'rDA3kcFNMpQNzkmmDnih'
+	    },
+	    body: JSON.stringify(data)
+	  });
+	}
+
+	function fetchQuestions() {
+	  return fetch(postUrl, {
+	    headers: {
+	      'x-api-token': 'rDA3kcFNMpQNzkmmDnih'
+	    }
+	  }).then(function (res) {
+	    return res.json();
+	  });
+	}
+
+	function upvote(questionId) {
+	  return fetch(postUrl + '/' + questionId + '/upvote', {
+	    method: 'post',
+	    headers: {
+	      'x-api-token': 'rDA3kcFNMpQNzkmmDnih'
+	    }
+	  });
 	}
 
 	var Index = function (_React$Component) {
 	  _inherits(Index, _React$Component);
 
-	  function Index() {
+	  function Index(props) {
 	    _classCallCheck(this, Index);
 
-	    return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
+
+	    _this.state = {
+	      questions: []
+	    };
+	    _this.onUpvote = _this.onUpvote.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(Index, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var me = this;
+	      fetchQuestions().then(function (questions) {
+	        questions = questions || [];
+	        var currentVotedQuestions = readLocalStorage();
+	        questions.map(function (question) {
+	          if (currentVotedQuestions.includes(question.id)) {
+	            questions.voted = true;
+	          }
+	        });
+	        me.setState({ questions: questions });
+	      });
+	    }
+	  }, {
+	    key: 'onUpvote',
+	    value: function onUpvote(questionId) {
+	      var me = this;
+	      upvote(questionId).then(function () {
+	        var questions = me.state.questions;
+	        var questionIndex = questions.findIndex(function (question) {
+	          return question.id === questionId;
+	        });
+	        questions[questionIndex].voted = true;
+	        questions[questionIndex].votes++;
+	        me.setState({ questions: questions }, updateLocalStorage(questionId));
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_Form2.default, { onSubmit: postQuestion })
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Submit a question'
+	        ),
+	        _react2.default.createElement(_Form2.default, { onSubmit: postQuestion }),
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Questions'
+	        ),
+	        _react2.default.createElement(_QuestionList2.default, { questions: this.state.questions, onUpvote: this.onUpvote })
 	      );
 	    }
 	  }]);
@@ -22093,6 +22184,99 @@
 	}(_react2.default.Component);
 
 	exports.default = Form;
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function sortByVote(questionA, questionB) {
+	  return questionB.votes - questionA.votes;
+	}
+
+	var QuestionList = function (_React$Component) {
+	  _inherits(QuestionList, _React$Component);
+
+	  function QuestionList() {
+	    _classCallCheck(this, QuestionList);
+
+	    return _possibleConstructorReturn(this, (QuestionList.__proto__ || Object.getPrototypeOf(QuestionList)).apply(this, arguments));
+	  }
+
+	  _createClass(QuestionList, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          questions = _props.questions,
+	          onUpvote = _props.onUpvote;
+
+
+	      var sortedQuestions = questions.sort(sortByVote);
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'question-list' },
+	        sortedQuestions.map(function (question) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'question-item', key: question.id },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'question-votes' },
+	              question.votes
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'question-vote',
+	                onClick: function onClick() {
+	                  onUpvote(question.id);
+	                },
+	                disabled: question.voted },
+	              '\u25B2'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'question-text' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'question-body' },
+	                question.body
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'question-author' },
+	                question.author
+	              )
+	            )
+	          );
+	        })
+	      );
+	    }
+	  }]);
+
+	  return QuestionList;
+	}(_react2.default.Component);
+
+	exports.default = QuestionList;
 
 /***/ }
 /******/ ]);

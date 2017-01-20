@@ -44,10 +44,15 @@ func main() {
 	subRouter := router.Subrouter(MyContext{}, "")
 	subRouter.Middleware((*MyContext).APIAuthRequired)
 
+	subRouter.Get("/questions", (*MyContext).GetQuestions)
+	subRouter.Post("/questions", (*MyContext).AskQuestions)
+	subRouter.Post("/questions/:question_id:\\d*/upvote", (*MyContext).Upvote)
+
 	port := os.Getenv("PORT")
 
 	server := http.Server{
-		Addr: ":" + port,
+		Addr:    ":" + port,
+		Handler: router,
 	}
 	log.Fatal(server.ListenAndServe())
 }

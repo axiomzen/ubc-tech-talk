@@ -153,7 +153,7 @@ https://goo.gl/forms/lcPVfmXHT7aDTlC13
   - American Eskimo
 
 - **Eric**:
-  - West Highland Terrir
+  - West Highland Terrier
 
 - **Pablo**:
   - Hedgehogs

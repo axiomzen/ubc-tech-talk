@@ -202,6 +202,10 @@ https://goo.gl/forms/lcPVfmXHT7aDTlC13
 
 > What's it like to work at ZenHub? What's your day-to-day life like?
 
+- **Christine**:
+
+  - Working at ZenHub is really fast paced and exciting. We ship a new extension about once a day so there's constantly new features to work on. When I started my internship on my first day I got assigned a bunch of bugs so I had to learn javascript and CSS and then after that I asked a lot of questions from my co-workers for help. On a typical day we usually have a big feature we are working on with a few other team members so we will be implementing that as well as reviewing other people's code and testing.
+  
 - **Lucy**:
   - Please read Christine's blog.
 

@@ -17,6 +17,9 @@ You will require Go v1.7.4 and Node v5.5 to build the project on your local syst
 ## Tell us about you!
 https://goo.gl/forms/lcPVfmXHT7aDTlC13
 
+## Our Slides
+[Download slides](https://github.com/axiomzen/ubc-tech-talk/files/720845/UBC.Tech.Talk.-.Jan.19.2017.pdf)
+
 ## Questions and Answers
 > What other web stacks do you use?
 

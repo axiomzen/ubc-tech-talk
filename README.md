@@ -8,7 +8,6 @@ You will require Go v1.7.4 and Node v5.5 to build the project on your local syst
 
 ## Interesting reads
 [Why I Interned at a Startup Instead of a Tech Giant](https://medium.com/code-like-a-girl/why-i-interned-at-a-startup-instead-of-a-tech-giant-the-myth-of-the-good-job-170b8e54c7d5#.pdxdlvm5n)
-An opinionated guide to writing developer resumes in 2017
 
 [An opinionated guide to writing developer resumes in 2017](https://medium.com/@arthur_camara/how-to-write-a-good-resume-in-2017-b8ea9dfdd3b9?238743%3F1#.jbbqou5xr)
 

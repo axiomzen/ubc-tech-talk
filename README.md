@@ -16,8 +16,8 @@ You will require Go v1.7.4 and Node v5.5 to build the project on your local syst
 
 [ZenHub](https://zenhub.com)
 
-## Tell us about you!
-https://goo.gl/forms/lcPVfmXHT7aDTlC13
+## Tell us how we did & what you want to see next time
+https://goo.gl/forms/V0dypIzIYefAkVdM2
 
 ## Our Slides
 [Download slides](https://github.com/axiomzen/ubc-tech-talk/files/720845/UBC.Tech.Talk.-.Jan.19.2017.pdf)
